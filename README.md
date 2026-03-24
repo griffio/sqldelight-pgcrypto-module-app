@@ -28,7 +28,7 @@ sqldelight {
             packageName.set("griffio.queries")
             dialect(libs.sqldelight.postgresql.dialect)
             module(project(":pgcrypto-module")) // module can be local project
-            // or external dependency module("io.github.griffio:sqldelight-pgcrypto-module:0.0.1")
+            // or external dependency module("io.github.griffio:sqldelight-pgcrypto-module:0.0.2")
         }
     }
 }
