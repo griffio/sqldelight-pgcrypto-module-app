@@ -1,0 +1,48 @@
+-- Create a user with a hashed password
+insertUser:
+INSERT INTO app_user (email, password_hash)
+VALUES (:email, CRYPT(:password, GEN_SALT('bf')))
+RETURNING id, email, created_at;
+
+-- Verify a password against the stored hash
+verifyUserPassword:
+SELECT id, email
+FROM app_user
+WHERE email = :email
+  AND password_hash = CRYPT(:password, password_hash);
+
+-- Store a document with a SHA-256 checksum
+insertDocument:
+INSERT INTO document (owner_id, title, body, body_sha256)
+VALUES (
+  :ownerId,
+  :title,
+  :body,
+  digest(:body, 'sha256')
+)
+RETURNING id, title, created_at;
+
+-- Fetch a document checksum for comparison
+selectDocumentChecksum:
+SELECT id, title, body_sha256
+FROM document
+WHERE id = :documentId;
+
+-- Create a random API token and keep only a hash in the table
+insertApiToken:
+INSERT INTO api_token (user_id, token_hash, token_prefix, expires_at)
+VALUES (
+  :userId,
+  ENCODE(DIGEST(GEN_RANDOM_BYTES(32), 'sha256'), 'hex'),
+  SUBSTR(ENCODE(GEN_RANDOM_BYTES(16), 'hex'), 1, 8),
+  :expiresAt
+)
+RETURNING id, token_prefix, created_at, expires_at;
+
+-- Example of a direct hash function demo
+hashTextSha256:
+SELECT ENCODE(DIGEST(:text, 'sha256'), 'hex') AS sha256_hex;
+
+-- Example of HMAC with a secret key
+hmacTextSha256:
+SELECT ENCODE(HMAC(:text, :secret, 'sha256'), 'hex') AS hmac_hex;
