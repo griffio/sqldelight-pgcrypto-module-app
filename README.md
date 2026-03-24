@@ -8,7 +8,7 @@ Use with SqlDelight `2.3.x` or higher
 
 ---
 
-SqlDelight Pgcrypto Module
+SqlDelight Pgcrypto Module and Binary functions support
 
 https://www.postgresql.org/docs/current/pgcrypto.html
 
