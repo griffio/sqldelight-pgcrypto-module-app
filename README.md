@@ -36,7 +36,7 @@ sqldelight {
 
 `pgcrypto-module` published in Maven Central https://central.sonatype.com/artifact/io.github.griffio/sqldelight-pgcrypto/versions
 
-`io.github.griffio:sqldelight-pgcrypto:0.0.1`
+`io.github.griffio:sqldelight-pgcrypto:0.0.2`
 
 ---
 
